@@ -1,0 +1,5 @@
+CREATE TABLE data (
+    id SERIAL PRIMARY KEY,
+   data VARCHAR(100) NOT NULL,
+)
+    
