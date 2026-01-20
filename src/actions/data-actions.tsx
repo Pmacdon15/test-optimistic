@@ -1,6 +1,7 @@
 "use server";
 
 import { neon } from "@neondatabase/serverless";
+import { updateTag } from "next/cache";
 import type { Data } from "@/types/data-types";
 
 export async function addData(value: string): Promise<Data> {
@@ -12,7 +13,7 @@ export async function addData(value: string): Promise<Data> {
       VALUES (${value})
       RETURNING id, data;
     `) as Data[];
-
+    updateTag("data");
     return row;
   } catch (error) {
     console.error("Failed to insert data:", error);
@@ -31,6 +32,7 @@ export async function deleteData(id: number): Promise<Data | null> {
       RETURNING id, data;
     `) as Data[];
 
+    updateTag("data");
     // If no row was deleted, return null
     return row ?? null;
   } catch (error) {
